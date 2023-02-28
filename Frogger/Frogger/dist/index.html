@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>FIT2102 A1 2022</title>
+    <style>
+      .hidden {
+        visibility:hidden;
+      }
+      .key {
+        width:50px;
+        text-align:center;
+        border-radius:3px;
+        background-color:lightgray;
+      }
+      .highlight {
+        background-color:pink;
+      }
+      div#controls {
+          float: right;
+          margin: 50px;
+      }
+      .gameover {
+        font-family:sans-serif;
+        font-size:80px;
+        fill:red;
+      }
+      .text{
+        font-size: 20px;
+      }
+    </style>
+  <script defer src="main.js"></script></head>
+  <body>
+    <h1>Frogger</h1>
+    <svg id="svgCanvas" width="615" height="615">
+      <!-- <g id="foreground-layer"></g> -->
+    </svg>
+    <table align="right", border="5", style="width:20%; height: 20%;">
+      <caption>Game Status</caption>
+      <!-- <tr><td>Thrust</td><td>Up Arrow</td></tr> -->
+      <tr><td>Left</td><td><div id="ArrowLeft" class="key">&#8678;</div></td></tr>
+      <tr><td>Right</td><td><div id="ArrowRight" class="key">&#8680;</div></td></tr>
+      <tr><td>Up</td><td><div id="ArrowUp" class="key">&#8679;</div></td></tr>
+      <tr><td>Down</td><td><div id="ArrowDown" class="key">&#8681;</div></td></tr>
+      <tr><td>Restart</td><td><div id="keyR" class="key"></div>R</div></td></tr>
+      <tr><td>Current Score</td><td><div id="currentScore" class="text">0</div></td></tr>
+      <tr><td>High Score</td><td><div id="highScore" class="text">0</div></td></tr>
+      <!-- <tr><td>Fire</td><td>Space</td>
+      <tr><td>Restart Game</td><td>F5</td></tr> -->
+  </table>
+  </body>
+</html>
