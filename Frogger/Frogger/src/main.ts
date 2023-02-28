@@ -19,7 +19,6 @@ function main() {
     width: number,
   }>
 
-
 //  ------------- essential constants ---------------------
 const   
 constants = {
@@ -38,10 +37,6 @@ constants = {
 
 
 //  ------------- essential constants ---------------------
-
-
-
-
 
 // ------------------ Classes ------------------------
 
@@ -80,8 +75,6 @@ class Tick {
   constructor(public readonly elapsed:number) {} 
 };
 
-
-
 class Frog extends Body{
   constructor(public readonly pos : Position, movement : FrogMovement){
     super("Frog", pos, <dimensions>{ height : constants.FROG_SIZE, width : 0}, movement, "green")
@@ -94,7 +87,6 @@ class MovableRectangle extends Body{
       super('rect'.concat(id), pos, size, movement, colour)
   }
 }
-
 
 class StaticObject extends Body{
   constructor(public readonly id : string,
@@ -117,13 +109,10 @@ class Restart
   constructor(){}
 }
 
-
-
 //Will trigger a stream that prompts the creation of a log object at a particular
 //row
 
 // ------------------- Classes --------------------
-
 
 
 // ------------------ Our maing Game state ----------------------
@@ -178,7 +167,6 @@ const goalArray: ReadonlyArray<GoalObject> = [
 // ------------------ Our maing Game state ----------------------
 
 
-
 // ---------Functions to initalize static background objects----------------
   
 //function to initialize game objects
@@ -211,8 +199,6 @@ const goalArray: ReadonlyArray<GoalObject> = [
       { for(const k in o) e.setAttribute(k,String(o[k])) };
 // ---------Functions to initalize static background objects----------------
 
-
-
 // ---------------- HTML and SVG sections -----------------------
 const svg = document.querySelector("#svgCanvas") as SVGElement & HTMLElement;
 
@@ -227,7 +213,6 @@ frog.setAttribute(
   "fill: green; stroke: green; stroke-width: 1px;"
 );
 
-
 //creating new sections for the foreground and background layer
 
 //background layer
@@ -240,16 +225,11 @@ const foregroundLayer = document.createElementNS(svg.namespaceURI, "g");
 foregroundLayer.setAttribute("id", "foreground-layer");
 svg.append(foregroundLayer)
 
-
-//Adding the frog to the foreground layer
-
-
 // ---------------- HTML and SVG sections -----------------------
 
 
 //  ----- Functions creating our frog player  --------
  
-
 function createFrog() : Frog{
   return new Frog(constants.FrogInitialState, new FrogMovement(0, 0))
 }
@@ -278,18 +258,11 @@ function createMovableRect(s : State, Row : number, size : dimensions, movement 
   }, size, movement, color))
 }
 
-
-
-
 // ------------------ static objects -----------------
 
 // Serves as the platform over which the frog can move
 const startBoundary = new StaticObject("startBoundary", <Position>{x : 0, y : 585}, <dimensions>{width : 615, height: constants.DEFAULT_HEIGHT_BACKGROUND},"purple");
 addBackgroundObjects(initializeBackgroundObj(startBoundary))
-
-
-//Section to be fille up by the frog object to gain points
-
 
 //Boundary between road and river
 const roadRiverBoundary = new StaticObject("roadRiverBoundary", <Position>{x : 0, y : 315} , <dimensions>{width: 615, height: constants.DEFAULT_HEIGHT_BACKGROUND}, "purple");
@@ -301,16 +274,12 @@ addBackgroundObjects(initializeBackgroundObj(River));
 
 // ------------------ static objects -----------------
 
-
 //Adding our frog player
 addForegroundObjects(frog);
-
 
 const getShiftamount = (pos : number, shift: number): number => 
   Math.sign(shift) > 0 ? Math.min((constants.CANVAS_UPPER_BOUND - pos - 15), Math.abs(shift)) : 
  Math.min((pos - constants.CANVAS_LOWER_BOUND) , Math.abs(shift))
-
-
 
 // -----------------Function to move objects ---------------------------
 function moveObj(o : Body, moveFrog?: Movement) : Body{
@@ -330,8 +299,6 @@ function moveObj(o : Body, moveFrog?: Movement) : Body{
   }
 
 }
-
-
 // --------------------- Functions to check for collisions ---------------------------
 
 const logInBound = (s : Body) =>  
@@ -345,7 +312,7 @@ const overlap = (frogPosition : Position, log : Body): boolean =>
  (frogPosition.x + constants.FROG_SIZE) <= (log.pos.x + log.size.width))
 //
 
- // --------------------- Functions to check for collisions ---------------------------
+// --------------------- Functions to check for collisions ---------------------------
 
 // --------------------- Function to check if game over || proceed to next level ---------------------
 
@@ -398,7 +365,6 @@ const tick = (s:State,elapsed:number) => {
       gameOver : true
     }
   }
-
 
   if(OverlapLog){
 
@@ -453,14 +419,7 @@ const tick = (s:State,elapsed:number) => {
     }
   }
 }
-
-
 // ------------------------ Our tick function ----------------------------------------
-
-
-// -----------------Function to move objects ---------------------------
-
-
 
 // ---------------- Frog controls and movement --------------------
 
@@ -488,11 +447,9 @@ const
 //  ----------------- Helper functions for the state reducer ----------------------
 
 const checkIfGoalExists = (g1 : GoalObject) => (g2 : GoalObject) => g1 === g2;
-
 type MovableRectangleGenerator = (S : State) => MovableRectangle
 
 //  ----------------- Helper functions for the state reducer ----------------------
-
 
 // --------------- Game state reducer --------------------------
 function reduceState(s : State,  e : Tick | FrogMovement |  MovableRectangleGenerator | GoalObject | Restart) : State{
@@ -538,7 +495,6 @@ function reduceState(s : State,  e : Tick | FrogMovement |  MovableRectangleGene
           enemies: s.enemies.concat([e(s)]),
           objCount : s.objCount + 1
         }
-
       }
   }
   else if (e instanceof GoalObject){
@@ -555,8 +511,7 @@ function reduceState(s : State,  e : Tick | FrogMovement |  MovableRectangleGene
 }
 // --------------- Game state reducer --------------------------
 
-
- // ----------------- Our function to update the view of the game ---------------
+// ----------------- Our function to update the view of the game ---------------
 
 const renderScore = (s : State) => {
   const highscore = document.getElementById("highScore");
@@ -565,7 +520,6 @@ const renderScore = (s : State) => {
   if(highscore) highscore.innerText = String(s.highscore);
 
 }
-
 
 function renderObjects(b : readonly Body[]){
   b.forEach((b : Body) =>{
@@ -596,14 +550,12 @@ function renderObjects(b : readonly Body[]){
     v.setAttribute("y",String(b.pos.y))
     addBackgroundObjects(v)
   })
-
 }
 
 function updateView(s : State){
 
   //Get svg canvas
   const svg = document.getElementById("svgCanvas")!;
-
 
   if(s.gameOver){
     
@@ -625,8 +577,6 @@ function updateView(s : State){
   }
   
   else{
-
-
     //Remove the game over text
     const gameOver  = document.getElementById("GameOver")
     if(gameOver) document.getElementById("foreground-layer")?.removeChild(gameOver);
@@ -657,17 +607,11 @@ s.exit.forEach(o=>{
   const v = document.getElementById(o.id);
   if(v) document.getElementById("background-layer")?.removeChild(v)
 })
-
-
 }
   
-
 // ----------------- Our function to update the view of the game ---------------
 
-
-
 // --------------------- Streams ------------------------------- 
-// s : State, Row : number, size : dimensions, movement : LogMovement
 const generateRectObjects = (colour : string) => (row : number) => (height : number) => (width: number) => (shiftRight : boolean) => 
 (shiftAmount : number) => (s : State) : MovableRectangle => 
 createMovableRect(
@@ -689,7 +633,6 @@ const row4logs = Logs(3)(30)(90)(true)(1)
 const row5logs = Logs(4)(30)(90)(false)(1)
 const row6logs = Logs(5)(30)(180)(true)(1)
 
-
 //Creating our enemy objects
 const row1enemies = Enemies(0)(30)(30)(false)(4)
 const row2enemies = Enemies(1)(30)(30)(false)(4)
@@ -697,17 +640,11 @@ const row3enemies = Enemies(2)(30)(30)(true)(4)
 const row4enemies = Enemies(3)(30)(30)(false)(4)
 const row5enemies = Enemies(4)(30)(30)(true)(4)
 
-
-
-
-//Creating our enemy objects
-
 //Keeps track of the game time
 // at every tick we will keep on moving each of our logs and enemies
 const interval$ = interval(10).pipe(
   map(elapsed => new Tick(elapsed))
 );
-
 
 //Need to generate a stream of logs after a set amount of time
 
@@ -724,15 +661,12 @@ const FourthRowLogs$ = MovableRectangleStream$(row4logs)(3000)
 const FifthRowLogs$ = MovableRectangleStream$(row5logs)(3000)
 const SixthRowLogs$ = MovableRectangleStream$(row6logs)(6000)
 
-
 //Generating enemies
 const FirstRowEnemies$ = MovableRectangleStream$(row1enemies)(3000)
 const SecondRowEnemies$ = MovableRectangleStream$(row2enemies)(3000)
 const ThirdRowEnemies$ = MovableRectangleStream$(row3enemies)(3000)
 const FourthRowEnemiess$ = MovableRectangleStream$(row4enemies)(3000)
 const FifthRowEnemies$ = MovableRectangleStream$(row5enemies)(3000)
-
-
 
 const LogStream$ = merge(FirstRowLogs$, SecondRowLogs$, ThirdRowLogs$, FourthRowLogs$,
    FifthRowLogs$, SixthRowLogs$);
@@ -750,15 +684,10 @@ const generateGoalSquares$ = interval(6000).pipe(
 
 const userInputStream$ = merge(shiftDown, shiftLeft, shiftRight, shiftUp);
 
-
 const play$ = merge(interval$, LogStream$,userInputStream$, generateGoalSquares$, enemyStream$).pipe(
   scan(reduceState, initialState), 
 ).subscribe(updateView)
  
-
-
-
-
 // For highlighting keys corresponding to frog movmenents
 // taken from tim's asteroids example with some minor modifications
 type Event = 'keydown' | 'keyup';
@@ -780,9 +709,7 @@ function showKeys() {
   showKey('KeyR');
 }
 
-setTimeout(showKeys, 0); //
-// --------------------- Streams -------------------------------  
-
+setTimeout(showKeys, 0);   
 
 }
 
